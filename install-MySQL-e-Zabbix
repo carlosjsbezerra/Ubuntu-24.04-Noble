@@ -10,7 +10,7 @@ apt install mysql-server -y
 # Create initial database
 mysql -uroot -p
 mysql> create database zabbix character set utf8mb4 collate utf8mb4_bin;
-mysql> create user zabbix@localhost identified by 'zabbix';
+mysql> create user zabbix@localhost identified by 'password';
 mysql> grant all privileges on zabbix.* to zabbix@localhost;
 mysql> set global log_bin_trust_function_creators = 1;
 mysql> quit;
@@ -29,5 +29,5 @@ vim /etc/zabbix/zabbix_server.conf
 `DBPassword=password´
 
 # Inicie os processos do servidor e agente Zabbix
-systemctl restart zabbix-server zabbix-agent apache2
-systemctl enable zabbix-server zabbix-agent apache2
+systemctl restart zabbix-server zabbix-agent2 apache2
+systemctl enable zabbix-server zabbix-agent2 apache2
