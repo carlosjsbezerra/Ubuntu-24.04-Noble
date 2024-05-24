@@ -5,7 +5,7 @@ apt update
 
 # Install Zabbix server, frontend, agent
 apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent2 -y
-apt install mysql-server
+apt install mysql-server -y
 
 # Create initial database
 mysql -uroot -p
