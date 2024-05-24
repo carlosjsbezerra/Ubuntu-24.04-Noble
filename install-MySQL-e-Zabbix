@@ -1,6 +1,6 @@
 # Install Zabbix repository
-wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu20.04_all.deb
-dpkg -i zabbix-release_6.0-4+ubuntu20.04_all.deb
+wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-6+ubuntu24.04_all.deb
+dpkg -i zabbix-release_6.0-6+ubuntu24.04_all.deb
 apt update
 
 # Install Zabbix server, frontend, agent
@@ -9,7 +9,7 @@ apt install mysql-server
 
 # Create initial database
 mysql -uroot -p
-   
+
 mysql> create database zabbix character set utf8mb4 collate utf8mb4_bin;
 mysql> create user zabbix@localhost identified by 'password';
 mysql> grant all privileges on zabbix.* to zabbix@localhost;
@@ -21,8 +21,7 @@ zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-charact
 
 # Desative a opção log_bin_trust_function_creators após importar o esquema do banco de dados.
 
-mysql -uroot -p
-
+# mysql -uroot -p
 mysql> set global log_bin_trust_function_creators = 0;
 mysql> quit;
 
