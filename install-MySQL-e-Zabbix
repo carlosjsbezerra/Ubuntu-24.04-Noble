@@ -31,3 +31,9 @@ vim /etc/zabbix/zabbix_server.conf
 # Inicie os processos do servidor e agente Zabbix
 systemctl restart zabbix-server zabbix-agent2 apache2
 systemctl enable zabbix-server zabbix-agent2 apache2
+
+http://host/zabbix
+http://host/zabbix/index.php
+
+dpkg-reconfigure locales
+ - pt_BR.UTF-8 UTF-8
