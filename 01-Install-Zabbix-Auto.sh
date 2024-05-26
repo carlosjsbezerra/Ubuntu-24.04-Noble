@@ -19,10 +19,9 @@ install_zabbix_dependencies() {
     echo 
     echo 
     echo "Instalando as dependências do Zabbix Server e Agent..."
+    sleep 3
     echo
-    read -p "Pressione Enter para continuar..."
     echo
-    echo 
     
     sudo apt update 
     sudo apt install -y --install-recommends traceroute nmap snmp snmpd snmp-mibs-downloader apt-transport-https \
@@ -34,8 +33,7 @@ add_zabbix_repository() {
     echo
     echo 
     echo "Adicionando o repositório do Zabbix..." 
-    echo
-    read -p "Pressione Enter para continuar..." 
+    sleep 3
     echo
     echo 
     
@@ -48,8 +46,7 @@ install_zabbix() {
     echo
     echo  
     echo "Instalando o Zabbix Server, Frontend e Agent..." 
-    echo
-    read -p "Pressione Enter para continuar..." 
+    sleep 3
     echo
     echo 
 
@@ -66,7 +63,6 @@ check_ubuntu_version
 install_zabbix_dependencies
 add_zabbix_repository
 install_zabbix
-
 
 echo "Instalação do Zabbix Server e Agent concluída com sucesso."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
