@@ -4,7 +4,7 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=$(date +%T)
 
-# Cor verde para o texto
+# Definindo variáveis de cor
 GREEN='\033[0;32m'
 NC='\033[0m' # Sem cor
 
@@ -76,13 +76,36 @@ install_zabbix
 
 # Criando o Banco de Dados Zabbix Server e o Usuário Zabbix
 sudo mysql -u root -v <<EOF
+
+
+# Criando o Banco de Dados Zabbix Server 
+sudo mysql -u root -p <<EOF
+
+echo -e "${GREEN}CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;${NC}"
 CREATE DATABASE $ZABBIX_DB CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY '$ZABBIX_PASSWORD';
+
+echo -e "${GREEN}CREATE USER 'zabbix'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zabbix';${NC}"
+CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zabbix';
+
+echo -e "${GREEN}GRANT USAGE ON *.* TO 'zabbix'@'localhost';${NC}"
 GRANT USAGE ON *.* TO '$ZABBIX_USER'@'localhost';
+
+echo -e "${GREEN}GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';${NC}"
 GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
+
+echo -e "${GREEN}FLUSH PRIVILEGES;${NC}"
 FLUSH PRIVILEGES;
+
+echo -e "${GREEN}SET GLOBAL log_bin_trust_function_creators = 1;${NC}"
 SET GLOBAL log_bin_trust_function_creators = 1;
+
+echo -e "${GREEN}SHOW DATABASES;${NC}"
 SHOW DATABASES;
+
+echo -e "${GREEN}SELECT user, host FROM mysql.user WHERE user='zabbix';${NC}"
+SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
+
+echo -e "${GREEN}exit${NC}"
 SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
 exit
 EOF
