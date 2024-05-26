@@ -40,7 +40,7 @@ install_zabbix_dependencies() {
 add_zabbix_repository() {
     echo
     echo >> "$LOG"
-    echo "Adicionando o repositório do Zabbix..." >>
+    echo "Adicionando o repositório do Zabbix..." 
     echo "Adicionando o repositório do Zabbix..." >> "$LOG"
     read -p "Pressione Enter para continuar..." >> "$LOG"
     echo
