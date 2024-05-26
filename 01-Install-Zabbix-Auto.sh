@@ -12,7 +12,6 @@ check_ubuntu_version() {
     if [ "$(lsb_release -cs)" != "noble" ]; then
         echo
         echo
-        echo "Este script é destinado apenas para Ubuntu 24.04 Noble. Saindo."
         echo "Este script é destinado apenas para Ubuntu 24.04 Noble. Saindo." >> "$LOG"
         exit 1
     fi
@@ -22,17 +21,15 @@ check_ubuntu_version() {
 install_zabbix_dependencies() {
     echo 
     echo 
-    echo "Instalando as dependências do Zabbix Server e Agent..."
     echo "Instalando as dependências do Zabbix Server e Agent..." >> "$LOG"
     echo
     echo >> "$LOG"
-    read -p "Pressione Enter para continuar..."
     read -p "Pressione Enter para continuar..." >> "$LOG"
     echo
     echo >> "$LOG"
     
     sudo apt update &>> "$LOG"
-    sudo apt install --install-recommends traceroute nmap snmp snmpd snmp-mibs-downloader apt-transport-https \
+    sudo apt install -y --install-recommends traceroute nmap snmp snmpd snmp-mibs-downloader apt-transport-https \
         software-properties-common git vim fping &>> "$LOG"
 }
 
@@ -40,7 +37,6 @@ install_zabbix_dependencies() {
 add_zabbix_repository() {
     echo
     echo >> "$LOG"
-    echo "Adicionando o repositório do Zabbix..." 
     echo "Adicionando o repositório do Zabbix..." >> "$LOG"
     read -p "Pressione Enter para continuar..." >> "$LOG"
     echo
@@ -54,7 +50,7 @@ add_zabbix_repository() {
 install_zabbix() {
     echo
     echo >> "$LOG"
-    echo "Instalando o Zabbix Server, Frontend e Agent..." >> 
+    echo "Instalando o Zabbix Server, Frontend e Agent..." 
     echo "Instalando o Zabbix Server, Frontend e Agent..." >> "$LOG"
     read -p "Pressione Enter para continuar..." >> "$LOG"
     echo
@@ -76,7 +72,7 @@ install_zabbix
 
 echo
 echo >> "$LOG"
-echo "Instalação do Zabbix Server e Agent concluída com sucesso." >> 
+echo "Instalação do Zabbix Server e Agent concluída com sucesso." 
 echo "Instalação do Zabbix Server e Agent concluída com sucesso." >> "$LOG"
 echo
 echo >> "$LOG"
