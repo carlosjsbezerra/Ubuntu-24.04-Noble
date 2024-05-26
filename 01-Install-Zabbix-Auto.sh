@@ -29,7 +29,7 @@ install_zabbix_dependencies() {
     echo 
     echo 
     echo -e "\e[1;32mInstalando as dependências do Zabbix Server e Agent...\e[0m"
-    sleep 3
+    sleep 5
     echo
     echo
     
@@ -43,7 +43,7 @@ add_zabbix_repository() {
     echo
     echo
     echo -e "\e[1;32mAdicionando o repositório do Zabbix...\e[0m"
-    sleep 3
+    sleep 5
     echo
     echo 
     
@@ -56,7 +56,7 @@ install_zabbix() {
     echo
     echo  
     echo -e "\e[1;32mInstalando o Zabbix Server, Frontend e Agent...\e[0m"
-    sleep 3
+    sleep 5
     echo
     echo 
 
@@ -66,6 +66,82 @@ install_zabbix() {
     sudo apt install mysql-server -y 
 }
 
+
+# Criando o Banco de Dados Zabbix Server e o Usuário Zabbix
+echo
+echo -e "${GREEN}CRIANDO O BANCO DE DADOS ZABBIX SERVER.${NC}"
+sudo mysql -u root -v <<EOF
+CREATE DATABASE $ZABBIX_DB CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+exit
+EOF
+sleep 5
+
+echo -e "${GREEN}CRIANDO O USUARIO ZABBIX COM A SENHA ZABBIX DO BANCO DE DADOS ZABBIX.${NC}"
+sudo mysql -u root -v <<EOF
+CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zabbix';
+exit
+EOF
+sleep 5
+
+echo -e "${GREEN}CRIANDO O USUARIO DO BANCO DE DADOS ZABBIX SEM PERMISSOES ESPECIFICAS.${NC}"
+sudo mysql -u root -v <<EOF
+GRANT USAGE ON *.* TO '$ZABBIX_USER'@'localhost';
+exit
+EOF
+sleep 5
+
+
+echo -e "${GREEN}CONCENDER TODAS AS PERMISSOES AO USUARIO ZABBIX NO BANCO DE DADOS ZABBIX.${NC}"
+sudo mysql -u root -v <<EOF
+GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
+exit
+EOF
+sleep 5
+
+Aplicando as Mudanças de Permissões no MySQL
+echo -e "${GREEN}APLICANDO AS MUDANCAS DE PERMISSOES NO MySQL.${NC}"
+echo -e "${GREEN}FLUSH PRIVILEGES;${NC}"
+sudo mysql -u root -v <<EOF
+FLUSH PRIVILEGES;
+exit
+EOF
+sleep 5
+
+echo -e "${GREEN}HABILITANDO A CRIACAO DE FUNCOES COM LOG_BIN_TRUST_FUNCTION_CREATORS NO MySQL.${NC}"
+sudo mysql -u root -v <<EOF
+SET GLOBAL log_bin_trust_function_creators = 1;
+exit
+EOF
+sleep 5
+
+echo -e "${GREEN}LISTANDO TODOS OS BANCOS DE DADOS NO MySQL.${NC}"
+sudo mysql -u root -v <<EOF
+SHOW DATABASES;
+exit
+EOF
+sleep 5
+
+echo -e "${GREEN}VERIFICANDO O USUARIO ZABBIX CRIADO NO BANCO DE DADOS MySQL.${NC}"
+sudo mysql -u root -v <<EOF
+SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
+exit
+EOF
+sleep 5
+
+"Verificando o Usuário Zabbix Criado no Banco de Dados MySQL"
+echo -e "${GREEN}VERIFICANDO O USUARIO ZABBIX CRIADO NO BANCO DE DADOS MySQL.${NC}"
+sudo mysql -u root -v <<EOF
+SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
+exit
+EOF
+sleep 5
+
+echo
+echo -e "\e[1;32mBase de dados do Zabbix Server e usuário criados com sucesso.\e[0m"
+echo
+sleep 5
+
+
 # Verificar a versão do Ubuntu antes de começar
 check_ubuntu_version
 
@@ -73,46 +149,6 @@ check_ubuntu_version
 install_zabbix_dependencies
 add_zabbix_repository
 install_zabbix
-
-# Criando o Banco de Dados Zabbix Server e o Usuário Zabbix
-sudo mysql -u root -v <<EOF
-
-
-# Criando o Banco de Dados Zabbix Server 
-sudo mysql -u root -p <<EOF
-
-echo -e "${GREEN}CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;${NC}"
-CREATE DATABASE $ZABBIX_DB CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-
-echo -e "${GREEN}CREATE USER 'zabbix'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zabbix';${NC}"
-CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zabbix';
-
-echo -e "${GREEN}GRANT USAGE ON *.* TO 'zabbix'@'localhost';${NC}"
-GRANT USAGE ON *.* TO '$ZABBIX_USER'@'localhost';
-
-echo -e "${GREEN}GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';${NC}"
-GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
-
-echo -e "${GREEN}FLUSH PRIVILEGES;${NC}"
-FLUSH PRIVILEGES;
-
-echo -e "${GREEN}SET GLOBAL log_bin_trust_function_creators = 1;${NC}"
-SET GLOBAL log_bin_trust_function_creators = 1;
-
-echo -e "${GREEN}SHOW DATABASES;${NC}"
-SHOW DATABASES;
-
-echo -e "${GREEN}SELECT user, host FROM mysql.user WHERE user='zabbix';${NC}"
-SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
-
-echo -e "${GREEN}exit${NC}"
-SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
-exit
-EOF
-
-echo
-echo -e "\e[1;32mBase de dados do Zabbix Server e usuário criados com sucesso.\e[0m"
-echo
 
 
 echo
