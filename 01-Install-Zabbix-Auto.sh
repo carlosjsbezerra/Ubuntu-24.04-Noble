@@ -54,7 +54,7 @@ install_zabbix() {
     echo 
 
     sudo apt update 
-    sudo apt install --install-recommends zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf \
+    sudo apt -y install --install-recommends zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf \
         zabbix-sql-scripts zabbix-agent2 zabbix-agent2-plugin-* 
     sudo apt install mysql-server -y 
 }
