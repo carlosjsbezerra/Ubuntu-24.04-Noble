@@ -90,7 +90,6 @@ exit
 EOF
 sleep 5
 
-
 echo -e "${GREEN}CONCENDER TODAS AS PERMISSOES AO USUARIO ZABBIX NO BANCO DE DADOS ZABBIX.${NC}"
 sudo mysql -u root -v <<EOF
 GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
@@ -127,7 +126,6 @@ exit
 EOF
 sleep 5
 
-"Verificando o Usuário Zabbix Criado no Banco de Dados MySQL"
 echo -e "${GREEN}VERIFICANDO O USUARIO ZABBIX CRIADO NO BANCO DE DADOS MySQL.${NC}"
 sudo mysql -u root -v <<EOF
 SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
@@ -145,9 +143,9 @@ sleep 5
 check_ubuntu_version
 
 # Executar os passos de instalação
-install_zabbix_dependencies
-add_zabbix_repository
-install_zabbix
+#install_zabbix_dependencies
+#add_zabbix_repository
+#install_zabbix
 
 
 echo
