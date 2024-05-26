@@ -5,7 +5,7 @@
 # Variável do caminho do Log dos Script
 # opções do comando cut: -d (delimiter), -f (fields)
 # $0 (variável de ambiente do nome do comando)
-LOG="/var/log/$(echo "$0" | cut -d'/' -f2).log"
+LOG="/var/log/$(echo "$0" | cut -d'/' -f2)"
 
 # Função para verificar a versão do Ubuntu
 check_ubuntu_version() {
