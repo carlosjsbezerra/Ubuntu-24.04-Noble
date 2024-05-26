@@ -11,7 +11,8 @@ check_ubuntu_version() {
 # Função para instalar as dependências do Zabbix Server e Agent
 install_zabbix_dependencies() {
     echo "Instalando as dependências do Zabbix Server e Agent..."
-
+    read -p "Pressione Enter para continuar..."
+    
     sudo apt update
     sudo apt install --install-recommends traceroute nmap snmp snmpd snmp-mibs-downloader apt-transport-https \
         software-properties-common git vim fping
@@ -20,6 +21,7 @@ install_zabbix_dependencies() {
 # Função para adicionar o repositório do Zabbix
 add_zabbix_repository() {
     echo "Adicionando o repositório do Zabbix..."
+    read -p "Pressione Enter para continuar..."
     
     wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-6+ubuntu24.04_all.deb
     sudo dpkg -i zabbix-release_6.0-6+ubuntu24.04_all.deb
@@ -28,11 +30,12 @@ add_zabbix_repository() {
 # Função para instalar o Zabbix Server, Frontend e Agent
 install_zabbix() {
     echo "Instalando o Zabbix Server, Frontend e Agent..."
+    read -p "Pressione Enter para continuar..."
 
     sudo apt update
     sudo apt install --install-recommends zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf \
         zabbix-sql-scripts zabbix-agent2 zabbix-agent2-plugin-*
-    sudo apt install mysql-server -yS
+    sudo apt install mysql-server -y
 }
 
 # Verificar a versão do Ubuntu antes de começar
