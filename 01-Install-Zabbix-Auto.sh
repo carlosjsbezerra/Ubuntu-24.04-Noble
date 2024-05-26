@@ -14,7 +14,7 @@ ZABBIX_USER="zabbix"
 ZABBIX_PASSWORD="zabbix"
 
 
-# Função para verificar a versão do Ubuntu
+#01_ Função para verificar a versão do Ubuntu
 check_ubuntu_version() {
     if [ "$(lsb_release -cs)" != "noble" ]; then
         echo
@@ -51,7 +51,7 @@ add_zabbix_repository() {
     sudo dpkg -i zabbix-release_6.0-6+ubuntu24.04_all.deb 
 }
 
-# Função para instalar o Zabbix Server, Frontend e Agent
+#02_ Função para instalar o Zabbix Server, Frontend e Agent
 install_zabbix() {
     echo
     echo  
@@ -67,7 +67,7 @@ install_zabbix() {
 }
 
 
-# Função para criar banco de dados e usuário Zabbix
+#03_ Função para criar banco de dados e usuário Zabbix
 create_zabbix_db_and_user() {
     echo
     echo -e "${GREEN}CRIANDO O BANCO DE DADOS ZABBIX SERVER.${NC}"
@@ -134,17 +134,53 @@ EOF
 }
 
 
+#04_ Função para realizar as operações no banco de dados do Zabbix
+perform_zabbix_db_operations() {
+    clear
+    # Populando as Tabelas no Banco de Dados do Zabbix Server utilizando o arquivo de Esquema
+    echo -e "${GREEN}POPULANDO AS TABELAS NO BANCO DE DADOS DO ZABBIX SERVER.${NC}"
+    sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -pzabbix zabbix
+    sleep 3
+
+    # Listando os Bancos de Dados do MySQL
+    echo -e "${GREEN}LISTANDO OS BANCOS DE DADOS DO MySQL.${NC}"
+    sudo mysql -u zabbix -p -e "SHOW DATABASES;"
+    sleep 3
+
+    # Acessando o Banco de Dados Zabbix
+    echo -e "${GREEN}ACESSANDO O BANCO DE DADOS ZABBIX.${NC}"
+    sudo mysql -u zabbix -p <<EOF
+USE zabbix;
+SHOW TABLES;
+SELECT username,passwd FROM users;
+exit
+EOF
+    sleep 3
+
+    # Desabilitando a opção de Criação de Função no MySQL Server
+    echo -e "${GREEN}DESABILITANDO A OPÇÃO DE CRIAÇÃO DE FUNÇÃO NO MySQL Server.${NC}"
+    sudo mysql -u root -p <<EOF
+SET GLOBAL log_bin_trust_function_creators = 0;
+exit
+EOF
+    sleep 3
+
+    echo
+    echo -e "${GREEN}Operações concluídas.${NC}"
+    echo
+}
+
+
 # Verificar a versão do Ubuntu antes de começar
 check_ubuntu_version
-
 # Executar os passos de instalação
 install_zabbix_dependencies
-
 #add_zabbix_repository
 install_zabbix
-
 #create database
 create_zabbix_db_and_user
+# Chamando a função
+perform_zabbix_db_operations
 
 
 echo
