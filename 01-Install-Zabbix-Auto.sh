@@ -19,7 +19,6 @@ install_zabbix_dependencies() {
     echo 
     echo 
     echo -e "\e[1;32mInstalando as dependências do Zabbix Server e Agent...\e[0m"
-
     sleep 3
     echo
     echo
@@ -32,8 +31,8 @@ install_zabbix_dependencies() {
 # Função para adicionar o repositório do Zabbix
 add_zabbix_repository() {
     echo
-    echo 
-    echo "Adicionando o repositório do Zabbix..." 
+    echo
+    echo -e "\e[1;32mAdicionando o repositório do Zabbix...\e[0m"
     sleep 3
     echo
     echo 
@@ -46,7 +45,7 @@ add_zabbix_repository() {
 install_zabbix() {
     echo
     echo  
-    echo "Instalando o Zabbix Server, Frontend e Agent..." 
+    echo -e "\e[1;32mInstalando o Zabbix Server, Frontend e Agent...\e[0m"
     sleep 3
     echo
     echo 
@@ -68,7 +67,7 @@ install_zabbix
 
 echo
 echo
-echo "Instalação do Zabbix Server e Agent concluída com sucesso."
+echo -e "\e[1;32mInstalação do Zabbix Server e Agent concluída com sucesso.\e[0m"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
 	HORAFINAL=`date +%T`
@@ -78,9 +77,9 @@ echo "Instalação do Zabbix Server e Agent concluída com sucesso."
 	# opção do comando date: -u (utc), -d (date), 0 (string command), sec (force second), +%H (hour), %M (minute), %S (second), 
 	TEMPO=`date -u -d "0 $HORAFINAL01 sec - $HORAINICIAL01 sec" +"%H:%M:%S"`
 	# $0 (variável de ambiente do nome do comando)
-	echo -e "Tempo gasto para execução do script $0: $TEMPO"
+ 	echo -e "\e[1;32mTempo gasto para execução do script $0: $TEMPO\e[0m"
 echo -e "Pressione <Enter> para concluir o processo."
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
-echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n"
+echo -e "\e[1;32mFim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\e[0m"
 read
 exit 1
