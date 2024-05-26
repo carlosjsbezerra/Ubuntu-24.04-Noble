@@ -67,77 +67,71 @@ install_zabbix() {
 }
 
 
-# Criando o Banco de Dados Zabbix Server e o Usuário Zabbix
-echo
-echo -e "${GREEN}CRIANDO O BANCO DE DADOS ZABBIX SERVER.${NC}"
-sudo mysql -u root -v <<EOF
+# Função para criar banco de dados e usuário Zabbix
+create_zabbix_db_and_user() {
+    echo
+    echo -e "${GREEN}CRIANDO O BANCO DE DADOS ZABBIX SERVER.${NC}"
+    sudo mysql -u root -v <<EOF
 CREATE DATABASE $ZABBIX_DB CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo -e "${GREEN}CRIANDO O USUARIO ZABBIX COM A SENHA ZABBIX DO BANCO DE DADOS ZABBIX.${NC}"
-sudo mysql -u root -v <<EOF
-CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY 'zabbix';
+    echo -e "${GREEN}CRIANDO O USUÁRIO ZABBIX COM A SENHA DO BANCO DE DADOS ZABBIX.${NC}"
+    sudo mysql -u root -v <<EOF
+CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY '$ZABBIX_PASSWORD';
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo -e "${GREEN}CRIANDO O USUARIO DO BANCO DE DADOS ZABBIX SEM PERMISSOES ESPECIFICAS.${NC}"
-sudo mysql -u root -v <<EOF
+    echo -e "${GREEN}CRIANDO O USUÁRIO DO BANCO DE DADOS ZABBIX SEM PERMISSÕES ESPECÍFICAS.${NC}"
+    sudo mysql -u root -v <<EOF
 GRANT USAGE ON *.* TO '$ZABBIX_USER'@'localhost';
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo -e "${GREEN}CONCENDER TODAS AS PERMISSOES AO USUARIO ZABBIX NO BANCO DE DADOS ZABBIX.${NC}"
-sudo mysql -u root -v <<EOF
+    echo -e "${GREEN}CONCEDENDO TODAS AS PERMISSÕES AO USUÁRIO ZABBIX NO BANCO DE DADOS ZABBIX.${NC}"
+    sudo mysql -u root -v <<EOF
 GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo -e "${GREEN}APLICANDO AS MUDANCAS DE PERMISSOES NO MySQL.${NC}"
-sudo mysql -u root -v <<EOF
+    echo -e "${GREEN}APLICANDO AS MUDANÇAS DE PERMISSÕES NO MySQL.${NC}"
+    sudo mysql -u root -v <<EOF
 FLUSH PRIVILEGES;
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo -e "${GREEN}HABILITANDO A CRIACAO DE FUNCOES COM LOG_BIN_TRUST_FUNCTION_CREATORS NO MySQL.${NC}"
-sudo mysql -u root -v <<EOF
+    echo -e "${GREEN}HABILITANDO A CRIAÇÃO DE FUNÇÕES COM LOG_BIN_TRUST_FUNCTION_CREATORS NO MySQL.${NC}"
+    sudo mysql -u root -v <<EOF
 SET GLOBAL log_bin_trust_function_creators = 1;
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo -e "${GREEN}LISTANDO TODOS OS BANCOS DE DADOS NO MySQL.${NC}"
-sudo mysql -u root -v <<EOF
+    echo -e "${GREEN}LISTANDO TODOS OS BANCOS DE DADOS NO MySQL.${NC}"
+    sudo mysql -u root -v <<EOF
 SHOW DATABASES;
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo
-echo -e "${GREEN}VERIFICANDO O USUARIO ZABBIX CRIADO NO BANCO DE DADOS MySQL.${NC}"
-sudo mysql -u root -v <<EOF
+    echo
+    echo -e "${GREEN}VERIFICANDO O USUÁRIO ZABBIX CRIADO NO BANCO DE DADOS MySQL.${NC}"
+    sudo mysql -u root -v <<EOF
 SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
 exit
 EOF
-sleep 3
+    sleep 3
 
-echo
-echo -e "${GREEN}VERIFICANDO O USUARIO ZABBIX CRIADO NO BANCO DE DADOS MySQL.${NC}"
-sudo mysql -u root -v <<EOF
-SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
-exit
-EOF
-sleep 3
-
-echo
-echo -e "\e[1;32mBase de dados do Zabbix Server e usuário criados com sucesso.\e[0m"
-echo
-sleep 3
+    echo
+    echo -e "\e[1;32mBase de dados do Zabbix Server e usuário criados com sucesso.\e[0m"
+    echo
+    sleep 3
+}
 
 
 # Verificar a versão do Ubuntu antes de começar
@@ -147,6 +141,8 @@ check_ubuntu_version
 #install_zabbix_dependencies
 #add_zabbix_repository
 #install_zabbix
+#create database
+create_zabbix_db_and_user
 
 
 echo
