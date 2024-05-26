@@ -9,7 +9,7 @@ check_ubuntu_version() {
     if [ "$(lsb_release -cs)" != "noble" ]; then
         echo
         echo
-        echo "Este script é destinado apenas para Ubuntu 24.04 Noble. Saindo."
+	echo -e "\e[1;32mEste script é destinado apenas para Ubuntu 24.04 Noble. Saindo.\e[0m"
         exit 1
     fi
 }
