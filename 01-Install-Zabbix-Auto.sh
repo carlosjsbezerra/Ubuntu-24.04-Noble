@@ -145,8 +145,8 @@ perform_zabbix_db_operations() {
 
     # Populando as Tabelas no Banco de Dados do Zabbix Server utilizando o arquivo de Esquema
     echo -e "${GREEN}POPULANDO AS TABELAS NO BANCO DE DADOS DO ZABBIX SERVER.${NC}"
-    sudo zcat "$SQL_SCRIPT_PATH" | sudo mysql --default-character-set=utf8mb4 -u"$ZABBIX_USER" -p"$ZABBIX_PASSWORD" "$ZABBIX_DB"
-    sleep 3
+    sudo zcat "$SQL_SCRIPT_PATH" | mysql --default-character-set=utf8mb4 -u"$ZABBIX_USER" -p "$ZABBIX_PASSWORD"
+    
 
     # Listando os Bancos de Dados do MySQL
     echo -e "${GREEN}LISTANDO OS BANCOS DE DADOS DO MySQL.${NC}"
