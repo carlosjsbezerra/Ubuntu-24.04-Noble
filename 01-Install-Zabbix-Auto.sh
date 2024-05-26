@@ -12,6 +12,7 @@ NC='\033[0m' # Sem cor
 ZABBIX_DB="zabbix"
 ZABBIX_USER="zabbix"
 ZABBIX_PASSWORD="zabbix"
+SQL_SCRIPT_PATH="/usr/share/zabbix-sql-scripts/mysql/server.sql.gz"
 
 
 #01_ Função para verificar a versão do Ubuntu
@@ -136,23 +137,28 @@ EOF
 
 #04_ Função para realizar as operações no banco de dados do Zabbix
 perform_zabbix_db_operations() {
-    clear
+    # Verificando se o arquivo de script SQL existe
+    if [ ! -f "$SQL_SCRIPT_PATH" ]; then
+        echo -e "${RED}Erro: Arquivo de script SQL não encontrado em $SQL_SCRIPT_PATH${NC}"
+        exit 1
+    fi
+
     # Populando as Tabelas no Banco de Dados do Zabbix Server utilizando o arquivo de Esquema
     echo -e "${GREEN}POPULANDO AS TABELAS NO BANCO DE DADOS DO ZABBIX SERVER.${NC}"
-    sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | sudo mysql --default-character-set=utf8mb4 -uzabbix -pzabbix zabbix
+    sudo zcat "$SQL_SCRIPT_PATH" | sudo mysql --default-character-set=utf8mb4 -u"$ZABBIX_USER" -p"$ZABBIX_PASSWORD" "$ZABBIX_DB"
     sleep 3
 
     # Listando os Bancos de Dados do MySQL
     echo -e "${GREEN}LISTANDO OS BANCOS DE DADOS DO MySQL.${NC}"
-    sudo mysql -u zabbix -p -e "SHOW DATABASES;"
+    sudo mysql -u"$ZABBIX_USER" -p"$ZABBIX_PASSWORD" -e "SHOW DATABASES;"
     sleep 3
 
     # Acessando o Banco de Dados Zabbix
     echo -e "${GREEN}ACESSANDO O BANCO DE DADOS ZABBIX.${NC}"
-    sudo mysql -u zabbix -p <<EOF
-USE zabbix;
+    sudo mysql -u"$ZABBIX_USER" -p"$ZABBIX_PASSWORD" <<EOF
+USE $ZABBIX_DB;
 SHOW TABLES;
-SELECT username,passwd FROM users;
+SELECT username, passwd FROM users;
 exit
 EOF
     sleep 3
@@ -181,7 +187,6 @@ EOF
 #create_zabbix_db_and_user
 # Chamando a função
 perform_zabbix_db_operations
-
 
 echo
 echo
