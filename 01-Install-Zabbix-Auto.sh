@@ -138,9 +138,11 @@ EOF
 check_ubuntu_version
 
 # Executar os passos de instalação
-#install_zabbix_dependencies
+install_zabbix_dependencies
+
 #add_zabbix_repository
-#install_zabbix
+install_zabbix
+
 #create database
 create_zabbix_db_and_user
 
