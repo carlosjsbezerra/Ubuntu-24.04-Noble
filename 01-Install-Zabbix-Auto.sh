@@ -25,7 +25,7 @@ check_ubuntu_version() {
     fi
 }
 
-# Função para instalar as dependências do Zabbix Server e Agent
+#02_ Função para instalar as dependências do Zabbix Server e Agent
 install_zabbix_dependencies() {
     echo 
     echo 
@@ -39,7 +39,7 @@ install_zabbix_dependencies() {
         software-properties-common git vim fping 
 }
 
-# Função para adicionar o repositório do Zabbix
+#03_ Função para adicionar o repositório do Zabbix
 add_zabbix_repository() {
     echo
     echo
@@ -53,7 +53,7 @@ add_zabbix_repository() {
     sudo apt update
 }
 
-#02_ Função para instalar o Zabbix Server, Frontend e Agent
+#04_ Função para instalar o Zabbix Server, Frontend e Agent
 install_zabbix() {
     echo
     echo  
@@ -68,7 +68,7 @@ install_zabbix() {
 }
 
 
-#03_ Função para criar banco de dados e usuário Zabbix
+#05_ Função para criar banco de dados e usuário Zabbix
 create_zabbix_db_and_user() {
     echo
     echo -e "${GREEN}CRIANDO O BANCO DE DADOS ZABBIX SERVER.${NC}"
@@ -135,7 +135,7 @@ EOF
 }
 
 
-#04_ Função para realizar as operações no banco de dados do Zabbix
+#06_ Função para realizar as operações no banco de dados do Zabbix
 perform_zabbix_db_operations() {
     # Verificando se o arquivo de script SQL existe
     if [ ! -f "$SQL_SCRIPT_PATH" ]; then
@@ -177,15 +177,11 @@ EOF
 }
 
 
-# Verificar a versão do Ubuntu antes de começar
 check_ubuntu_version
-# Executar os passos de instalação
 install_zabbix_dependencies
-#add_zabbix_repository
+add_zabbix_repository
 install_zabbix
-#create database
 create_zabbix_db_and_user
-# Chamando a função
 perform_zabbix_db_operations
 
 echo
