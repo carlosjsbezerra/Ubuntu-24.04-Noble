@@ -81,6 +81,6 @@ echo "Instalação do Zabbix Server e Agent concluída com sucesso."
 	echo -e "Tempo gasto para execução do script $0: $TEMPO"
 echo -e "Pressione <Enter> para concluir o processo."
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
-echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
+echo -e "Fim do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n"
 read
 exit 1
