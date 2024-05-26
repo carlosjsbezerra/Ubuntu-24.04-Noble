@@ -81,7 +81,7 @@ CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY 
 GRANT USAGE ON *.* TO '$ZABBIX_USER'@'localhost';
 GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
 FLUSH PRIVILEGES;
-${GREEN}SET GLOBAL log_bin_trust_function_creators = 1;${NC}
+SET GLOBAL log_bin_trust_function_creators = 1;
 SHOW DATABASES;
 SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
 exit
