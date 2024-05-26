@@ -4,6 +4,9 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=$(date +%T)
 
+# Cor verde para o texto
+GREEN='\033[0;32m'
+NC='\033[0m' # Sem cor
 
 # Definindo variáveis
 ZABBIX_DB="zabbix"
@@ -78,7 +81,7 @@ CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY 
 GRANT USAGE ON *.* TO '$ZABBIX_USER'@'localhost';
 GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
 FLUSH PRIVILEGES;
-SET GLOBAL log_bin_trust_function_creators = 1;
+${GREEN}SET GLOBAL log_bin_trust_function_creators = 1;${NC}
 SHOW DATABASES;
 SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
 exit
