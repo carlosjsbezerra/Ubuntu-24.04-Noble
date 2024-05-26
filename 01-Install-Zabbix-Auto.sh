@@ -10,6 +10,9 @@ LOG="/var/log/$(echo "$0" | cut -d'/' -f2).log"
 # Função para verificar a versão do Ubuntu
 check_ubuntu_version() {
     if [ "$(lsb_release -cs)" != "noble" ]; then
+        echo
+        echo
+        echo "Este script é destinado apenas para Ubuntu 24.04 Noble. Saindo."
         echo "Este script é destinado apenas para Ubuntu 24.04 Noble. Saindo." >> "$LOG"
         exit 1
     fi
@@ -17,11 +20,15 @@ check_ubuntu_version() {
 
 # Função para instalar as dependências do Zabbix Server e Agent
 install_zabbix_dependencies() {
-    echo >> "$LOG"
-    echo >> "$LOG"
+    echo 
+    echo 
+    echo "Instalando as dependências do Zabbix Server e Agent..."
     echo "Instalando as dependências do Zabbix Server e Agent..." >> "$LOG"
+    echo
     echo >> "$LOG"
+    read -p "Pressione Enter para continuar..."
     read -p "Pressione Enter para continuar..." >> "$LOG"
+    echo
     echo >> "$LOG"
     
     sudo apt update &>> "$LOG"
@@ -31,9 +38,12 @@ install_zabbix_dependencies() {
 
 # Função para adicionar o repositório do Zabbix
 add_zabbix_repository() {
+    echo
     echo >> "$LOG"
+    echo "Adicionando o repositório do Zabbix..." >>
     echo "Adicionando o repositório do Zabbix..." >> "$LOG"
     read -p "Pressione Enter para continuar..." >> "$LOG"
+    echo
     echo >> "$LOG"
     
     wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-6+ubuntu24.04_all.deb &>> "$LOG"
@@ -42,9 +52,12 @@ add_zabbix_repository() {
 
 # Função para instalar o Zabbix Server, Frontend e Agent
 install_zabbix() {
+    echo
     echo >> "$LOG"
+    echo "Instalando o Zabbix Server, Frontend e Agent..." >> 
     echo "Instalando o Zabbix Server, Frontend e Agent..." >> "$LOG"
     read -p "Pressione Enter para continuar..." >> "$LOG"
+    echo
     echo >> "$LOG"
 
     sudo apt update &>> "$LOG"
@@ -61,6 +74,9 @@ install_zabbix_dependencies
 add_zabbix_repository
 install_zabbix
 
+echo
 echo >> "$LOG"
+echo "Instalação do Zabbix Server e Agent concluída com sucesso." >> 
 echo "Instalação do Zabbix Server e Agent concluída com sucesso." >> "$LOG"
+echo
 echo >> "$LOG"
