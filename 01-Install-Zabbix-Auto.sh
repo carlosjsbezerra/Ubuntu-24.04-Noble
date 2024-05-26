@@ -98,7 +98,6 @@ exit
 EOF
 sleep 5
 
-Aplicando as Mudanças de Permissões no MySQL
 echo -e "${GREEN}APLICANDO AS MUDANCAS DE PERMISSOES NO MySQL.${NC}"
 echo -e "${GREEN}FLUSH PRIVILEGES;${NC}"
 sudo mysql -u root -v <<EOF
