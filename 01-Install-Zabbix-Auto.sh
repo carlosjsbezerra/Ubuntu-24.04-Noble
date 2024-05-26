@@ -18,7 +18,8 @@ check_ubuntu_version() {
 install_zabbix_dependencies() {
     echo 
     echo 
-    echo "Instalando as dependências do Zabbix Server e Agent..."
+    echo -e "\e[1;32mInstalando as dependências do Zabbix Server e Agent...\e[0m"
+
     sleep 3
     echo
     echo
