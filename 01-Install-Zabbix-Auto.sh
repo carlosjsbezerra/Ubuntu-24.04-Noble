@@ -4,6 +4,13 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=$(date +%T)
 
+
+# Definindo variáveis
+ZABBIX_DB="zabbix"
+ZABBIX_USER="zabbix"
+ZABBIX_PASSWORD="zabbix"
+
+
 # Função para verificar a versão do Ubuntu
 check_ubuntu_version() {
     if [ "$(lsb_release -cs)" != "noble" ]; then
@@ -63,6 +70,23 @@ check_ubuntu_version
 install_zabbix_dependencies
 add_zabbix_repository
 install_zabbix
+
+# Criando o Banco de Dados Zabbix Server e o Usuário Zabbix
+sudo mysql -u root -v <<EOF
+CREATE DATABASE $ZABBIX_DB CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER '$ZABBIX_USER'@'localhost' IDENTIFIED WITH mysql_native_password BY '$ZABBIX_PASSWORD';
+GRANT USAGE ON *.* TO '$ZABBIX_USER'@'localhost';
+GRANT ALL PRIVILEGES ON $ZABBIX_DB.* TO '$ZABBIX_USER'@'localhost';
+FLUSH PRIVILEGES;
+SET GLOBAL log_bin_trust_function_creators = 1;
+SHOW DATABASES;
+SELECT user, host FROM mysql.user WHERE user='$ZABBIX_USER';
+exit
+EOF
+
+echo
+echo -e "\e[1;32mBase de dados do Zabbix Server e usuário criados com sucesso.\e[0m"
+echo
 
 
 echo
