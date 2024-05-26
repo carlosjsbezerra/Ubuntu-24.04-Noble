@@ -64,6 +64,9 @@ install_zabbix_dependencies
 add_zabbix_repository
 install_zabbix
 
+
+echo
+echo
 echo "Instalação do Zabbix Server e Agent concluída com sucesso."
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
 	# opção do comando date: +%T (Time)
