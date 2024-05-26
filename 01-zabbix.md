@@ -229,7 +229,7 @@ exit
 			Password: zabbix
 			<Next step>
 		Settings
-			Zabbix server name: wsvaamonde
+			Zabbix server name: wssuporte
 			Default time zone: (UTC-03:00) America/Sao_Paulo
 			Default theme: Dark
 			<Next step>
@@ -442,6 +442,6 @@ exit
 
 	#fazendo uma busca no disk utilizando o comando find (NÃO COMENTADO NO VÍDEO)
 	#opção do comando find: -name (Base of file name), * (Qualquer coisa)
-	sudo find / -name vaamonde*
+	sudo find / -name suporte*
 
 =========================================================================================
