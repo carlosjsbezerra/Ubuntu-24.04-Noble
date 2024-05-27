@@ -165,7 +165,7 @@ EOF
 
     # Desabilitando a opção de Criação de Função no MySQL Server
     echo -e "${GREEN}DESABILITANDO A OPÇÃO DE CRIAÇÃO DE FUNÇÃO NO MySQL Server.${NC}"
-    sudo mysql -u root -p <<EOF
+    sudo mysql -u root -v <<EOF
 SET GLOBAL log_bin_trust_function_creators = 0;
 exit
 EOF
@@ -177,11 +177,11 @@ EOF
 }
 
 
-check_ubuntu_version
-install_zabbix_dependencies
-add_zabbix_repository
-install_zabbix
-create_zabbix_db_and_user
+#check_ubuntu_version
+#install_zabbix_dependencies
+#add_zabbix_repository
+#install_zabbix
+#create_zabbix_db_and_user
 perform_zabbix_db_operations
 
 echo
