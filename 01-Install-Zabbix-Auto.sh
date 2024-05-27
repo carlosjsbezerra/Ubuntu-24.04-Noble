@@ -149,11 +149,13 @@ perform_zabbix_db_operations() {
     
 
     # Listando os Bancos de Dados do MySQL
+    echo
     echo -e "${GREEN}LISTANDO OS BANCOS DE DADOS DO MySQL.${NC}"
     sudo mysql -u"$ZABBIX_USER" -p"$ZABBIX_PASSWORD" -e "SHOW DATABASES;"
     sleep 3
 
     # Acessando o Banco de Dados Zabbix
+    echo
     echo -e "${GREEN}ACESSANDO O BANCO DE DADOS ZABBIX.${NC}"
     sudo mysql -u"$ZABBIX_USER" -p"$ZABBIX_PASSWORD" <<EOF
 USE $ZABBIX_DB;
@@ -164,6 +166,7 @@ EOF
     sleep 3
 
     # Desabilitando a opção de Criação de Função no MySQL Server
+    echo
     echo -e "${GREEN}DESABILITANDO A OPÇÃO DE CRIAÇÃO DE FUNÇÃO NO MySQL Server.${NC}"
     sudo mysql -u root -v <<EOF
 SET GLOBAL log_bin_trust_function_creators = 0;
