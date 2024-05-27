@@ -232,6 +232,14 @@ edit_zabbix_config() {
     sudo systemctl enable zabbix-server
     sudo systemctl restart zabbix-server zabbix-agent2 apache2
 
+    #Verificando o Serviço e Versão do Zabbix Server e Agent2
+    echo
+    echo -e "Verificando o Serviço e Versão do Zabbix Server e Agent2"
+    sudo systemctl status zabbix-server zabbix-agent2
+    sudo systemctl restart zabbix-server zabbix-agent2
+    sudo systemctl stop zabbix-server zabbix-agent2
+    sudo systemctl start zabbix-server zabbix-agent2
+    
 }
 
 check_ubuntu_version
@@ -240,7 +248,7 @@ add_zabbix_repository
 install_zabbix
 create_zabbix_db_and_user
 perform_zabbix_db_operations
-#edit_zabbix_config
+edit_zabbix_config
 
 echo
 echo
