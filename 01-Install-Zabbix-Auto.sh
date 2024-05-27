@@ -25,6 +25,8 @@ check_ubuntu_version() {
     fi
 }
 
+:'--------------------------------------------------------------------------------------------------'
+
 #02_ Função para instalar as dependências do Zabbix Server e Agent
 install_zabbix_dependencies() {
     echo 
@@ -67,6 +69,7 @@ install_zabbix() {
         zabbix-sql-scripts zabbix-agent2 zabbix-agent2-plugin-* 
 }
 
+:'--------------------------------------------------------------------------------------------------'
 
 #05_ Função para criar banco de dados e usuário Zabbix
 create_zabbix_db_and_user() {
@@ -132,16 +135,18 @@ EOF
     echo -e "\e[1;32mBase de dados do Zabbix Server e usuário criados com sucesso.\e[0m"
     echo
     sleep 3
+    clear
 }
 
+:'--------------------------------------------------------------------------------------------------'
 
 #06_ Função para realizar as operações no banco de dados do Zabbix
 perform_zabbix_db_operations() {
     # Verificando se o arquivo de script SQL existe
-    if [ ! -f "$SQL_SCRIPT_PATH" ]; then
+    :'if [ ! -f "$SQL_SCRIPT_PATH" ]; then
         echo -e "${RED}Erro: Arquivo de script SQL não encontrado em $SQL_SCRIPT_PATH${NC}"
         exit 1
-    fi
+    fi'
 
     # Populando as Tabelas no Banco de Dados do Zabbix Server utilizando o arquivo de Esquema
     echo -e "${GREEN}POPULANDO AS TABELAS NO BANCO DE DADOS DO ZABBIX SERVER.${NC}"
@@ -179,6 +184,35 @@ EOF
     echo
 }
 
+:'--------------------------------------------------------------------------------------------------'
+
+#07_ Editando os arquivos de Configuração do Zabbix Server e Agent
+edit_zabbix_config() {
+    echo -e "${GREEN}EDITANDO O ARQUIVO DE CONFIGURAÇÃO DO ZABBIX SERVER.${NC}"
+    sudo sed -i '95s/^#//' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '95s/DBHost=.*/DBHost=localhost/' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '107s/DBName=.*/DBName=zabbix/' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '123s/DBUser=.*/DBUser=zabbix/' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '131s/^#//' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '131s/DBPassword=.*/DBPassword=zabbix/' /etc/zabbix/zabbix_server.conf
+    echo -e "${GREEN}ARQUIVO DE CONFIGURAÇÃO DO ZABBIX SERVER EDITADO COM SUCESSO.${NC}"
+
+    sleep 3
+
+    echo -e "${GREEN}EDITANDO O ARQUIVO DE CONFIGURAÇÃO DO ZABBIX AGENT2.${NC}"
+    sudo sed -i '80s/Server=.*/Server=172.16.1.20/' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '133s/ServerActive=.*/ServerActive=172.16.1.20/' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '144s/Hostname=.*/Hostname=wsvaamonde/' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '204s/^#//' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '204s/RefreshActiveChecks=.*/RefreshActiveChecks=5s/' /etc/zabbix/zabbix_agent2.conf
+    echo -e "${GREEN}ARQUIVO DE CONFIGURAÇÃO DO ZABBIX AGENT2 EDITADO COM SUCESSO.${NC}"
+
+    sleep 3
+
+    echo
+    echo -e "${GREEN}Todos os arquivos de configuração foram editados com sucesso.${NC}"
+    echo
+}
 
 check_ubuntu_version
 install_zabbix_dependencies
@@ -186,6 +220,7 @@ add_zabbix_repository
 install_zabbix
 create_zabbix_db_and_user
 perform_zabbix_db_operations
+#edit_zabbix_config
 
 echo
 echo
