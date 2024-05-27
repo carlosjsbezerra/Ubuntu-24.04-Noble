@@ -192,12 +192,12 @@ EOF
 #07_ Editando os arquivos de Configuração do Zabbix Server e Agent
 edit_zabbix_config() {
     echo -e "${GREEN}EDITANDO O ARQUIVO DE CONFIGURAÇÃO DO ZABBIX SERVER.${NC}"
-    sudo sed -i '95s/^#//' /etc/zabbix/zabbix_server.conf
-    sudo sed -i '95s/DBHost=.*/DBHost=localhost/' /etc/zabbix/zabbix_server.conf
-    sudo sed -i '107s/DBName=.*/DBName=zabbix/' /etc/zabbix/zabbix_server.conf
-    sudo sed -i '123s/DBUser=.*/DBUser=zabbix/' /etc/zabbix/zabbix_server.conf
-    sudo sed -i '131s/^#//' /etc/zabbix/zabbix_server.conf
-    sudo sed -i '131s/DBPassword=.*/DBPassword=zabbix/' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '93s/^#//' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '93s/DBHost=.*/DBHost=localhost/' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '105s/DBName=.*/DBName=zabbix/' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '121s/DBUser=.*/DBUser=zabbix/' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '129s/^#//' /etc/zabbix/zabbix_server.conf
+    sudo sed -i '129s/DBPassword=.*/DBPassword=zabbix/' /etc/zabbix/zabbix_server.conf
     echo -e "${GREEN}ARQUIVO DE CONFIGURAÇÃO DO ZABBIX SERVER EDITADO COM SUCESSO.${NC}"
 
     sleep 3
