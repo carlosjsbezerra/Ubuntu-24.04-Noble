@@ -210,7 +210,7 @@ edit_zabbix_config() {
     echo -e "${GREEN}EDITANDO O ARQUIVO DE CONFIGURAÇÃO DO ZABBIX AGENT2.${NC}"
     sudo sed -i '80s/Server=.*/Server=10.201.149.88/' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '133s/ServerActive=.*/ServerActive=10.201.149.88/' /etc/zabbix/zabbix_agent2.conf
-    sudo sed -i '144s/Hostname=.*/Hostname=nomedoservidor/' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '144s/Hostname=.*/Hostname=zabbix-server/' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '204s/^#//' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '204s/RefreshActiveChecks=.*/RefreshActiveChecks=5s/' /etc/zabbix/zabbix_agent2.conf
     echo
