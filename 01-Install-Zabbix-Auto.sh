@@ -212,7 +212,7 @@ edit_zabbix_config() {
     sudo sed -i '133s/ServerActive=.*/ServerActive=10.201.149.88/' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '144s/Hostname=.*/Hostname=zabbix-server/' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '204s/^#//' /etc/zabbix/zabbix_agent2.conf
-    sudo sed -i '204s/RefreshActiveChecks=.*/RefreshActiveChecks=5s/' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '204s/RefreshActiveChecks=.*/RefreshActiveChecks=60/' /etc/zabbix/zabbix_agent2.conf
     echo
 
     sleep 3
