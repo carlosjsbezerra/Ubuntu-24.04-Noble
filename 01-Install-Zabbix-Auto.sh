@@ -25,6 +25,9 @@ check_ubuntu_version() {
     fi
 }
 
+sudo apt update
+sudo apt upgrade -y
+
 :'--------------------------------------------------------------------------------------------------'
 
 #02_ Função para instalar as dependências do Zabbix Server e Agent
