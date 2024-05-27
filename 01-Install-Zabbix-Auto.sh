@@ -198,6 +198,9 @@ edit_zabbix_config() {
     sudo sed -i '121s/DBUser=.*/DBUser=zabbix/' /etc/zabbix/zabbix_server.conf
     sudo sed -i '129s/^#//' /etc/zabbix/zabbix_server.conf
     sudo sed -i '129s/DBPassword=.*/DBPassword=zabbix/' /etc/zabbix/zabbix_server.conf
+
+    sleep 3
+    sudo vim /etc/zabbix/zabbix_server.conf
     echo -e "${GREEN}ARQUIVO DE CONFIGURAÇÃO DO ZABBIX SERVER EDITADO COM SUCESSO.${NC}"
 
     sleep 3
@@ -208,6 +211,9 @@ edit_zabbix_config() {
     sudo sed -i '144s/Hostname=.*/Hostname=nomedoservidor/' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '204s/^#//' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '204s/RefreshActiveChecks=.*/RefreshActiveChecks=5s/' /etc/zabbix/zabbix_agent2.conf
+
+    sleep 3
+    vim /etc/zabbix/zabbix_agent2.conf
     echo -e "${GREEN}ARQUIVO DE CONFIGURAÇÃO DO ZABBIX AGENT2 EDITADO COM SUCESSO.${NC}"
 
     sleep 3
