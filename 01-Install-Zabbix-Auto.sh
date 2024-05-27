@@ -177,11 +177,11 @@ EOF
 }
 
 
-#check_ubuntu_version
-#install_zabbix_dependencies
-#add_zabbix_repository
-#install_zabbix
-#create_zabbix_db_and_user
+check_ubuntu_version
+install_zabbix_dependencies
+add_zabbix_repository
+install_zabbix
+create_zabbix_db_and_user
 perform_zabbix_db_operations
 
 echo
