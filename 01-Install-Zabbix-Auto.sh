@@ -208,8 +208,8 @@ edit_zabbix_config() {
     sleep 3
 
     echo -e "${GREEN}EDITANDO O ARQUIVO DE CONFIGURAÇÃO DO ZABBIX AGENT2.${NC}"
-    sudo sed -i '80s/Server=.*/Server=172.16.1.20/' /etc/zabbix/zabbix_agent2.conf
-    sudo sed -i '133s/ServerActive=.*/ServerActive=172.16.1.20/' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '80s/Server=.*/Server=10.201.148.88/' /etc/zabbix/zabbix_agent2.conf
+    sudo sed -i '133s/ServerActive=.*/ServerActive=10.201.148.88/' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '144s/Hostname=.*/Hostname=nomedoservidor/' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '204s/^#//' /etc/zabbix/zabbix_agent2.conf
     sudo sed -i '204s/RefreshActiveChecks=.*/RefreshActiveChecks=5s/' /etc/zabbix/zabbix_agent2.conf
@@ -224,6 +224,14 @@ edit_zabbix_config() {
     echo
     echo -e "${GREEN}Todos os arquivos de configuração foram editados com sucesso.${NC}"
     echo
+
+    #habilitando o serviço do Zabbix Server e Agent2
+    echo -e "habilitando o serviço do Zabbix Server e Agent2"
+    sleep 3
+    sudo systemctl daemon-reload
+    sudo systemctl enable zabbix-server
+    sudo systemctl restart zabbix-server zabbix-agent2 apache2
+
 }
 
 check_ubuntu_version
