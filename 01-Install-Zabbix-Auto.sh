@@ -146,10 +146,10 @@ EOF
 #06_ Função para realizar as operações no banco de dados do Zabbix
 perform_zabbix_db_operations() {
     # Verificando se o arquivo de script SQL existe
-    :'if [ ! -f "$SQL_SCRIPT_PATH" ]; then
-        echo -e "${RED}Erro: Arquivo de script SQL não encontrado em $SQL_SCRIPT_PATH${NC}"
-        exit 1
-    fi'
+    #'if [ ! -f "$SQL_SCRIPT_PATH" ]; then
+    #    echo -e "${RED}Erro: Arquivo de script SQL não encontrado em $SQL_SCRIPT_PATH${NC}"
+    #    exit 1
+    #fi'
 
     # Populando as Tabelas no Banco de Dados do Zabbix Server utilizando o arquivo de Esquema
     echo -e "${GREEN}POPULANDO AS TABELAS NO BANCO DE DADOS DO ZABBIX SERVER.${NC}"
